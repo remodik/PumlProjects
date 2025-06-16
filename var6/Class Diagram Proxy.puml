@@ -1,0 +1,29 @@
+@startuml
+class DocumentRequest {
+  -startDate: Date
+  -endDate: Date
+  -token: String
+  +getStartDate(): Date
+  +getEndDate(): Date
+  +getToken(): String
+}
+
+interface DocumentService {
+  +getDocuments(request: DocumentRequest): List<Document>
+}
+
+class DocumentProxy {
+  -realService: DocumentService
+  +DocumentProxy(realService: DocumentService)
+  +getDocuments(request: DocumentRequest): List<Document>
+}
+
+class DocumentServiceImpl {
+  +getDocuments(request: DocumentRequest): List<Document>
+}
+
+DocumentService <|.. DocumentProxy
+DocumentService <|.. DocumentServiceImpl
+DocumentProxy o--> DocumentService
+
+@enduml

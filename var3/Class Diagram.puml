@@ -1,0 +1,100 @@
+@startuml
+class Game {
+  -id: String
+  -idPlayer1: String
+  -idPlayer2: String
+  -board: Board
+  -move: Move
+  +getId(): String
+  +getBoard(): Board
+  +makeMove(move: Move): boolean
+  +проверитьОкончание(): Результат
+}
+
+class Board {
+  -position: Map<Cage, Figure>
+  +updatePosition(move: Move)
+  +getPosition(): Map<Cage, Figure>
+}
+
+class Player {
+  -id: String
+  -name: String
+  -rating: int
+  +getId(): String
+  +getName(): String
+  +getRating(): int
+  +updateRaiting(новыйРейтинг: int)
+}
+
+class GameClient {
+  -idUser: String
+  -gameServer: GameServer
+  +startGameAgainstPlayer()
+  +startGameAgainstBot(level: Level)
+  +makeMove(idMatch: String, move: Move)
+  +viewRating(): List<Player>
+}
+
+class GameServer {
+  -copy: GameServer
+  -playerVault: PlayerVault
+  -GameServer()
+  +getCopy(): GameServer
+  +FindRivalidUser: Player
+  +createMatch(idPlayer1: String, idPlayer2: String): Game
+  +ProcessStroke(idMatch: String, move: Move): boolean
+  +updateRaiting(idWinner: String, idLoser: String)
+}
+
+class PlayerVault {
+  -players: Map<String, Player>
+  +savePlayer(player: Player): String
+  +getPlayer(id: String): Player
+  +getRating(): List<Player>
+  +updateRaiting(idPlayer: String, rating: int)
+}
+
+class ChessBot {
+  -strategy: BotStrategy
+  +setStrategy(strategy: BotStrategy)
+  +makeMove(board: Board): Move
+}
+
+interface BotStrategy {
+  +calculateStroke(board: Board): Move
+}
+
+class BeginnerStrategy {
+  +calculateStroke(board: Board): Move
+}
+
+class AmateurStrategy {
+  +calculateStroke(board: Board): Move
+}
+
+class StrategyMasters {
+  +calculateStroke(board: Board): Move
+}
+
+GameClient o--> GameServer
+GameServer o--> PlayerVault
+GameServer --> Game
+Game --> Board
+PlayerVault --> Player
+ChessBot o--> BotStrategy
+BeginnerStrategy .|> BotStrategy
+AmateurStrategy .|> BotStrategy
+StrategyMasters .|> BotStrategy
+
+note right of GameServer
+  Паттерн Singleton: Обеспечивает единственный copy
+  сервера для управления матчами и рейтингами
+end note
+
+note right of ChessBot
+  Паттерн Strategy: Реализует разные уровни мастерства
+  бота через сменные алгоритмы
+end note
+
+@enduml

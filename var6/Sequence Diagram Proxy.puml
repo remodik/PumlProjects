@@ -1,0 +1,16 @@
+@startuml
+actor Клиент
+participant "DocumentProxy" as DP
+participant "DocumentServiceImpl" as DSI
+
+Клиент -> DP: getDocuments(request: "2025-01-01 to 2025-06-01", token: "valid")
+DP -> DP: validateRequest(request, token)
+DP -> DSI: getDocuments(request)
+DSI --> DP: documents OR error
+DP --> Клиент: documents OR errorMessage
+
+note right of DP
+  Проверка: корректность периода, наличие документов, права доступа
+end note
+
+@enduml

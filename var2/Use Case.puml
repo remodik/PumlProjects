@@ -1,0 +1,13 @@
+@startuml
+actor User
+
+User --> (Register)
+User --> (Send Message)
+User --> (Receive Message)
+User --> (View Chat History)
+
+note right of (Receive Message)
+  Уведомления о новых сообщениях в режиме реального времени
+end note
+
+@enduml

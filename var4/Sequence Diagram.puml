@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant "UserInterface" as UI
+participant "PetStatus" as SP
+participant "NotificationService" as SN
+
+User -> UI: feedPet()
+UI -> SP: updateHunger(value)
+SP --> UI: StatusUpdated
+SP -> SN: check Status()
+SN --> UI: Notification (Hunger, Health, Happiness)
+UI --> User: DisplayNotification
+
+@enduml

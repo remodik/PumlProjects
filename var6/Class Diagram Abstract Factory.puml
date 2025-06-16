@@ -1,0 +1,48 @@
+@startuml
+interface GUIFactory {
+  +createButton(): Button
+  +createWindow(): Window
+}
+
+class WindowsFactory {
+  +createButton(): WindowsButton
+  +createWindow(): WindowsWindow
+}
+
+class HTMLFactory {
+  +createButton(): HTMLButton
+  +createWindow(): HTMLWindow
+}
+
+interface Button {
+  +render(): String
+}
+
+interface Window {
+  +display(): String
+}
+
+class WindowsButton {
+  +render(): String
+}
+
+class HTMLButton {
+  +render(): String
+}
+
+class WindowsWindow {
+  +display(): String
+}
+
+class HTMLWindow {
+  +display(): String
+}
+
+GUIFactory <|.. WindowsFactory
+GUIFactory <|.. HTMLFactory
+Button <|.. WindowsButton
+Button <|.. HTMLButton
+Window <|.. WindowsWindow
+Window <|.. HTMLWindow
+
+@enduml

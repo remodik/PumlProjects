@@ -1,0 +1,65 @@
+@startuml
+class Pet {
+  -id: String
+  -name: String
+  -Hungerlevel: int
+  -LevelHealth: int
+  -Happinesslevel: int
+  -Energylevel: int
+  +getStatus(): Map<String, int>
+  +updateStatus(arg: String, value: int)
+}
+
+class PetCondition {
+  -copy: PetCondition
+  -pet: Pet
+  -PetCondition()
+  +getCopy(): PetCondition
+  +updateHunger(value: int)
+  +updateHealth(value: int)
+  +updateHappiness(value: int)
+  +updateEnergy(value: int)
+  +checkStatus(): Map<String, int>
+}
+
+class UserInterface {
+  -petCondition: PetCondition
+  +feedPet()
+  +playPet()
+  +putSleep()
+  +cleanPet()
+  +showStatus()
+}
+
+class NotificationOfService {
+  -observers: List<Observer>
+  +addObserver(observer: Observer)
+  +removeObserver(observer: Observer)
+  +notify(condition: Map<String, int>)
+}
+
+interface Observer {
+  +update(condition: Map<String, int>)
+}
+
+class NotifyingUser {
+  +update(condition: Map<String, int>)
+}
+
+UserInterface o--> PetCondition
+PetCondition --> Pet
+PetCondition o--> NotificationOfService
+NotificationOfService o--> Observer
+NotifyingUser .|> Observer
+
+note right of PetCondition
+  Паттерн Singleton: Обеспечивает единственный copy
+  состояния питомца для согласованности данных
+end note
+
+note right of NotificationOfService
+  Паттерн Observer: Уведомляет пользователя
+  о изменениях состояния питомца
+end note
+
+@enduml

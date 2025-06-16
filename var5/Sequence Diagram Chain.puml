@@ -1,0 +1,15 @@
+@startuml
+actor Система
+participant "LogHandler" as LH
+participant "EmailHandler" as EH
+participant "SMSHandler" as SH
+
+Система -> LH: handle(error: "High", "Critical failure")
+LH -> LH: logToFile("High", "Critical failure")
+LH -> EH: handle(error: "High", "Critical failure")
+EH -> EH: sendEmail("High", "Critical failure")
+EH -> SH: handle(error: "High", "Critical failure")
+SH -> SH: sendSMS("High", "Critical failure")
+SH --> Система: обработка завершена
+
+@enduml

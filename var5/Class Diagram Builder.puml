@@ -1,0 +1,69 @@
+@startuml
+class House {
+  -rooms: int
+  -area: double
+  -wallMaterial: String
+  -hasGarage: boolean
+  -designStyle: String
+  +getRooms(): int
+  +getArea(): double
+  +getWallMaterial(): String
+  +hasGarage(): boolean
+  +getDesignStyle(): String
+  +toString(): String
+}
+
+interface HouseBuilder {
+  +setRooms(rooms: int): HouseBuilder
+  +setArea(area: double): HouseBuilder
+  +setWallMaterial(material: String): HouseBuilder
+  +setHasGarage(hasGarage: boolean): HouseBuilder
+  +setDesignStyle(style: String): HouseBuilder
+  +build(): House
+}
+
+class CottageBuilder {
+  -house: House
+  +CottageBuilder()
+  +setRooms()
+  +setArea()
+  +setWallMaterial()
+  +setHasGarage()
+  +setDesignStyle()
+  +build(): House
+}
+
+class ApartmentBuilder {
+  -house: House
+  +ApartmentBuilder()
+  +setRooms()
+  +setArea()
+  +setWallMaterial()
+  +setHasGarage()
+  +setDesignStyle()
+  +build(): House
+}
+
+class DachaBuilder {
+  -house: House
+  +DachaBuilder()
+  +setRooms()
+  +setArea()
+  +setWallMaterial()
+  +setHasGarage()
+  +setDesignStyle()
+  +build(): House
+}
+
+class Director {
+  -builder: HouseBuilder
+  +setBuilder(builder: HouseBuilder)
+  +constructHouse(): House
+}
+
+HouseBuilder <|.. CottageBuilder
+HouseBuilder <|.. ApartmentBuilder
+HouseBuilder <|.. DachaBuilder
+Director o--> HouseBuilder
+
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+actor User
+
+User --> (Create Task)
+User --> (View Tasks)
+User --> (Edit Task)
+User --> (Delete Task)
+User --> (Complete Task)
+
+note right of (Complete Task)
+    Инициирует уведомление пользователя
+end note
+
+@enduml

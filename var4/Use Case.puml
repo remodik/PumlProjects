@@ -1,0 +1,14 @@
+@startuml
+actor User
+
+User --> (Feed Pet)
+User --> (Play with Pet)
+User --> (Put to bed)
+User --> (Clean Pet)
+User --> (Check status)
+
+note right of (Check status)
+  Уведомления о голоде, здоровье, счастье
+end note
+
+@enduml

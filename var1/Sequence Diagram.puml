@@ -1,0 +1,22 @@
+@startuml
+actor User
+participant "TaskManager" as TM
+participant "TaskRepository" as TR
+participant "NotificationService" as NS
+
+User -> TM: createTask(title, description)
+TM -> TR: saveTask(task)
+TR --> TM: taskId
+TM --> User: taskCreated
+
+User -> TM: viewTasks()
+TM -> TR: getAllTasks()
+TR --> TM: taskList
+TM --> User: displayTasks(taskList)
+
+User -> TM: completeTask(taskId)
+TM -> TR: updateTaskStatus(taskId, completed)
+TM -> NS: notifyUser(taskId, "Task Completed")
+NS --> User: notification
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+actor User
+User --> (Sign Up)
+User --> (Login)
+User --> (Play against player)
+User --> (Play against a bot)
+User --> (View Rating)
+
+note right of (Play against a bot)
+    Выбор уровня мастерства бота
+end note
+
+note right of (Play against player)
+    Игра по сети или интернету
+end note
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+[User Interface] --> [ChatClient]
+[ChatClient] --> [MessageServer]
+[MessageServer] --> [MessageRepository]
+[MessageServer] --> [NotificationService]
+[NotificationService] --> [ChatClient]
+
+note right of [MessageServer]
+  Шаблон синглтона для централизованной обработки сообщений
+end note
+
+note right of [NotificationService]
+  Шаблон наблюдателя для уведомлений о сообщениях в режиме реального времени
+end note
+
+@enduml

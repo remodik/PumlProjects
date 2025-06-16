@@ -1,0 +1,42 @@
+@startuml
+class ErrorMessage {
+  -level: String
+  -message: String
+  +getLevel(): String
+  +getMessage(): String
+}
+
+interface ErrorHandler {
+  +setNextHandler(handler: ErrorHandler)
+  +handle(error: ErrorMessage): void
+}
+
+class LogHandler {
+  -nextHandler: ErrorHandler
+  +LogHandler()
+  +setNextHandler(handler: ErrorHandler)
+  +handle(error: ErrorMessage): void
+}
+
+class EmailHandler {
+  -nextHandler: ErrorHandler
+  +EmailHandler()
+  +setNextHandler(handler: ErrorHandler)
+  +handle(error: ErrorMessage): void
+}
+
+class SMSHandler {
+  -nextHandler: ErrorHandler
+  +SMSHandler()
+  +setNextHandler(handler: ErrorHandler)
+  +handle(error: ErrorMessage): void
+}
+
+ErrorHandler <|.. LogHandler
+ErrorHandler <|.. EmailHandler
+ErrorHandler <|.. SMSHandler
+LogHandler o--> ErrorHandler
+EmailHandler o--> ErrorHandler
+SMSHandler o--> ErrorHandler
+
+@enduml

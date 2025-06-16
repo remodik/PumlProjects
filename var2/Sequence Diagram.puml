@@ -1,0 +1,16 @@
+@startuml
+actor User
+participant "ChatClient" as CC
+participant "MessageServer" as MS
+participant "MessageRepository" as MR
+participant "NotificationService" as NS
+
+User -> CC: sendMessage(recipientId, content)
+CC -> MS: forwardMessage(senderId, recipientId, content)
+MS -> MR: saveMessage(message)
+MR --> MS: messageId
+MS -> NS: notifyRecipient(recipientId, message)
+NS --> CC: newMessage(message)
+CC --> User: displayMessage
+
+@enduml

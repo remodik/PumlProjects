@@ -1,0 +1,15 @@
+@startuml
+[User Interface] --> [TaskManager]
+[TaskManager] --> [TaskRepository]
+[TaskManager] --> [NotificationService]
+[NotificationService] --> [User Interface]
+
+note right of [TaskRepository]
+  Шаблон Singleton для централизованного хранения задач
+end note
+
+note right of [NotificationService]
+  Шаблон наблюдателя для уведомлений о завершении задач
+end note
+
+@enduml

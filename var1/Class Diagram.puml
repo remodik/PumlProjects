@@ -1,0 +1,75 @@
+@startuml
+class Task {
+  -id: String
+  -title: String
+  -description: String
+  -status: Status
+  +getId(): String
+  +getTitle(): String
+  +setTitle(title: String)
+  +getDescription(): String
+  +setDescription(description: String)
+  +getStatus(): Status
+  +setStatus(status: Status)
+}
+
+enum Status {
+  PENDING
+  COMPLETED
+}
+
+class TaskManager {
+  -taskRepository: TaskRepository
+  -notificationService: NotificationService
+  +createTask(title: String, description: String): Task
+  +viewTasks(): List<Task>
+  +editTask(id: String, title: String, description: String)
+  +deleteTask(id: String)
+  +completeTask(id: String)
+}
+
+class TaskRepository {
+  -instance: TaskRepository
+  -tasks: Map<String, Task>
+  -TaskRepository()
+  +getInstance(): TaskRepository
+  +saveTask(task: Task): String
+  +getAllTasks(): List<Task>
+  +getTask(id: String): Task
+  +updateTask(task: Task)
+  +deleteTask(id: String)
+}
+
+class NotificationService {
+  -observers: List<Observer>
+  +addObserver(observer: Observer)
+  +removeObserver(observer: Observer)
+  +notifyUser(taskId: String, message: String)
+}
+
+interface Observer {
+  +update(taskId: String, message: String)
+}
+
+class UserNotification {
+  +update(taskId: String, message: String)
+}
+
+TaskManager o--> TaskRepository
+TaskManager o--> NotificationService
+NotificationService o--> Observer
+UserNotification .|> Observer
+TaskRepository --> Task
+Task --> Status
+
+note right of TaskRepository
+  Шаблон Singleton: Обеспечивает создание одного экземпляра
+  репозитория задач для согласованного доступа к данным
+end note
+
+note right of NotificationService
+  Шаблон наблюдателя: уведомляет пользователей
+  Когда задачи завершены
+end note
+
+@enduml
